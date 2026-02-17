@@ -1,0 +1,25 @@
+{
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/.jj",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/.classpath",
+        "**/.settings",
+        "**/__pycache__"
+    ],
+    "format_on_save": "on",
+    "languages": {
+        "Python": {
+            "prettier": { "allowed": false },
+            "language_servers": ["ruff", "ty"]
+        },
+        "TOML": {
+            "prettier": { "allowed": false },
+            "language_servers": ["tombi"]
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "build": { "dockerfile": "Dockerfile", "context": "." },
+    "workspaceFolder": "/workspaces/xml2excel",
+    "containerEnv": {
+        "DISPLAY": "${env:DISPLAY}"
+    },
+    "runArgs": [
+        "--network",
+        "host",
+        "-v",
+        "/tmp/.X11-unix:/tmp/.X11-unix:rw",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock"
+    ]
+}

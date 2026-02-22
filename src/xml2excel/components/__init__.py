@@ -1,6 +1,4 @@
 from .App import App
-from .Button import Button
-from .CheckBox import CheckBox
 from .DisableColumnsItem import DisableColumnsItem
 from .DisableColumnsList import DisableColumnsList
 from .ExportFilesButton import ExportFilesButton
@@ -10,13 +8,11 @@ from .MergeOption import MergeOption
 from .NumberFilesImported import NumberFilesImported
 from .PrefixOption import PrefixOption
 from .RecursiveOption import RecursiveOption
-from .Root import Root
-from .ScrollArea import ScrollArea
+from .Window import Window
 
 __all__ = [
     'App',
-    'Button',
-    'CheckBox',
+    'Window',
     'DisableColumnsItem',
     'DisableColumnsList',
     'ExportFilesButton',
@@ -26,6 +22,4 @@ __all__ = [
     'NumberFilesImported',
     'PrefixOption',
     'RecursiveOption',
-    'Root',
-    'ScrollArea',
 ]

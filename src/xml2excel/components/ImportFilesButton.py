@@ -1,31 +1,36 @@
-from tkinter.filedialog import askdirectory
-
-from customtkinter import CTkBaseClass
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import QFileDialog, QPushButton
 
 from xml2excel.commands.import_files import ImportFilesInput, import_files
 from xml2excel.manager.context import GlobalContext
 
-from .Button import Button
 
-
-class ImportFilesButton(Button):
+class ImportFilesButton(QPushButton):
     DIALOG_TITLE = 'Importar XMLs'
 
-    def __init__(self, master: CTkBaseClass, ctx: GlobalContext, **kwargs):
+    def __init__(self, ctx: GlobalContext, **kwargs):
+        super().__init__(**kwargs)
+
         self._ctx = ctx
 
-        super().__init__(master, command=self._command, **kwargs)
+        self.clicked.connect(self._click)
 
-    def _command(self) -> None:
+    @Slot()
+    def _click(self) -> None:
         store = self._ctx.store
-        dirpath = askdirectory(title=self.DIALOG_TITLE)
+        config = self._ctx.config
+
+        dirpath = QFileDialog.getExistingDirectory(
+            self,
+            caption=self.DIALOG_TITLE,
+        )
 
         if dirpath:
             output = import_files(
                 ImportFilesInput(
                     path=dirpath,
-                    prefix_mode=self._ctx.config.prefix_mode,
-                    recursive=self._ctx.config.recursive,
+                    recursive=config.recursive,
+                    prefix_mode=config.prefix_mode,
                 )
             )
 

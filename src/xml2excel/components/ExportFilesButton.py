@@ -1,6 +1,7 @@
-import tkinter as tk
 from pathlib import Path
-from tkinter.filedialog import askdirectory, asksaveasfilename
+
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import QFileDialog, QPushButton
 
 from xml2excel.aliases import DataFrameTuple
 from xml2excel.commands.export_files import (
@@ -11,26 +12,23 @@ from xml2excel.consts import FileExtensions
 from xml2excel.manager.context import GlobalContext
 from xml2excel.utils.path import resolve_filepath
 
-from .Button import Button
 
-
-class ExportFilesButton(Button):
+class ExportFilesButton(QPushButton):
     DIALOG_TITLE = 'Exportar'
 
-    def __init__(self, master, ctx: GlobalContext, **kwargs):
+    def __init__(self, ctx: GlobalContext, **kwargs):
+        super().__init__(**kwargs)
+
         self._ctx = ctx
-
-        super().__init__(
-            master, state=tk.DISABLED, command=self._command, **kwargs
-        )
-
         self._ctx.store.trace('data', self._update_state)
 
-    def _update_state(self, data: DataFrameTuple) -> None:
-        state = tk.NORMAL if data is not None else tk.DISABLED
-        self.configure(state=state)
+        self.clicked.connect(self._click)
 
-    def _command(self, *args):
+    def _update_state(self, data: DataFrameTuple) -> None:
+        self.setDisabled(data is None)
+
+    @Slot()
+    def _click(self):
         store = self._ctx.store
         config = self._ctx.config
 
@@ -38,9 +36,10 @@ class ExportFilesButton(Button):
             return
 
         if config.merge:
-            filepath = asksaveasfilename(
-                title=self.DIALOG_TITLE,
-                defaultextension=FileExtensions.EXCEL,
+            filepath = QFileDialog.getOpenFileName(
+                self,
+                caption=self.DIALOG_TITLE,
+                filter=FileExtensions.EXCEL,
             )
 
             if filepath:
@@ -57,7 +56,10 @@ class ExportFilesButton(Button):
             return
 
         if store.filepaths is not None:
-            root = askdirectory(title=ExportFilesButton.DIALOG_TITLE)
+            root = QFileDialog.getExistingDirectory(
+                self,
+                caption=ExportFilesButton.DIALOG_TITLE,
+            )
 
             if root:
                 resolved_filepaths = tuple(

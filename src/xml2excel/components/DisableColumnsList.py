@@ -1,62 +1,50 @@
-import tkinter as tk
-from typing import Callable, cast
-
 import pandas as pd
-from customtkinter.windows.widgets.ctk_scrollable_frame import (
-    CTkScrollableFrame,
-)
+from PySide6.QtWidgets import QLabel, QScrollArea, QVBoxLayout, QWidget
 
 from xml2excel.aliases import DataFrameTuple
 from xml2excel.components.DisableColumnsItem import DisableColumnsItem
 from xml2excel.manager.context import GlobalContext
 
 
-class DisableColumnsList(CTkScrollableFrame):
-    def __init__(self, master, ctx: GlobalContext, **kwargs):
-        super().__init__(master, **kwargs)
+class DisableColumnsList(QWidget):
+    def __init__(self, ctx: GlobalContext, **kwargs):
+        super().__init__(**kwargs)
 
         self._ctx = ctx
-        self.__wrapper = None
+        self._ctx.store.trace('data', self._on_data_change)
 
-        self._ctx.store.trace('data', self._update_list)
+        self._layout = QVBoxLayout(self)
 
-    def _update_list(self, data: DataFrameTuple) -> None:
-        if data is None:
-            return
+        self._label = QLabel(text='Colunas Habilitadas: ')
+        self._layout.addWidget(self._label)
 
+        self._scrollarea = QScrollArea()
+        self._scrollarea.setWidgetResizable(True)
+        self._layout.addWidget(self._scrollarea)
+
+        self._scrollarea_widget = QWidget()
+        self._scrollarea_layout = QVBoxLayout(self._scrollarea_widget)
+
+        self._scrollarea.setWidget(self._scrollarea_widget)
+
+    def _reset(self):
         self._ctx.config.ignore_columns = []
 
-        for widget in self.winfo_children():
-            widget.destroy()
+        for i in range(self._scrollarea_layout.count()):
+            item = self._scrollarea_layout.itemAt(i)
+            widget = item.widget() if item else None
 
-        if len(data) == 0:
+            if widget:
+                widget.setParent(None)
+
+    def _on_data_change(self, data: DataFrameTuple | None) -> None:
+        self._reset()
+
+        if not data:
             return
 
         df = pd.concat(data)
-        columns = df.columns
 
-        for column in columns:
-            item = DisableColumnsItem(
-                self,
-                text=column,
-                command=self._create_command(column),
-            )
-
-            item.pack(
-                fill=tk.BOTH,
-                expand=1,
-                pady=2,
-            )
-
-    def _create_command(self, column: str) -> Callable:
-        config = self._ctx.config
-
-        def command(*args) -> None:
-            columns = cast(list[str], config.ignore_columns)
-
-            if column in columns:
-                columns.remove(column)
-            else:
-                columns.append(column)
-
-        return command
+        for column in df.columns:
+            item = DisableColumnsItem(self._ctx, text=column)
+            self._scrollarea_layout.addWidget(item)

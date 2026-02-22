@@ -1,18 +1,18 @@
-from xml2excel.components.CheckBox import CheckBox
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import QCheckBox
+
 from xml2excel.manager.context import GlobalContext
 
 
-class MergeOption(CheckBox):
-    def __init__(self, master, ctx: GlobalContext, **kwargs):
+class MergeOption(QCheckBox):
+    def __init__(self, ctx: GlobalContext, **kwargs):
+        super().__init__(**kwargs)
+
         self._ctx = ctx
 
-        super().__init__(master, command=self._command, **kwargs)
+        self.setChecked(self._ctx.config.merge)
+        self.stateChanged.connect(self._on_check)
 
-        if self._ctx.config.merge:
-            self.select()
-
-        if self._text_label:
-            self._text_label.configure(wraplength=300)
-
-    def _command(self):
-        self._ctx.config.merge = bool(self.get())
+    @Slot()
+    def _on_check(self):
+        self._ctx.config.merge = self.isChecked()

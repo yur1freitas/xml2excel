@@ -1,46 +1,50 @@
-import tkinter as tk
 from enum import StrEnum
 
-import customtkinter as ctk
+from PySide6.QtCore import Slot
+from PySide6.QtWidgets import QComboBox, QLabel, QVBoxLayout, QWidget
 
 from xml2excel.manager.context import GlobalContext
 from xml2excel.utils.flatten_xml import PrefixMode
 
 
 class Values(StrEnum):
-    NONE = 'Nenhuma'
-    CLOSEST = 'Apenas Tag Pai'
+    NONE = 'Nenhum'
+    CLOSEST = 'Uma Tag Pai'
     ALL = 'Todas as Tags Pai'
 
 
-class PrefixOption(ctk.CTkFrame):
+class PrefixOption(QWidget):
     VALUES: list[str] = [
         Values.NONE,
         Values.CLOSEST,
         Values.ALL,
     ]
 
-    def __init__(self, master, ctx: GlobalContext, **kwargs):
+    def __init__(self, ctx: GlobalContext, **kwargs):
+        super().__init__(**kwargs)
+
         self._ctx = ctx
 
-        super().__init__(master, **kwargs)
+        self._layout = QVBoxLayout(self)
 
-        self._label = ctk.CTkLabel(self, text='Modo de Prefixo:')
-        self._label.pack(anchor=tk.W, side=tk.TOP)
+        self._label = QLabel(self, text='Modo de Prefixo:')
 
-        self._combobox = ctk.CTkComboBox(
-            self, values=self.VALUES, command=self._command
-        )
-        self._combobox.pack(anchor=tk.W, side=tk.BOTTOM)
+        self._combobox = QComboBox(self)
+        self._combobox.addItems(self.VALUES)
+        self._combobox.setCurrentIndex(self._ctx.config.prefix_mode)
+        self._combobox.currentTextChanged.connect(self._on_select)
 
-        value = self.VALUES[self._ctx.config.prefix_mode]
-        self._combobox.set(value)
+        self._layout.addWidget(self._label)
+        self._layout.addWidget(self._combobox)
 
-    def _command(self, value: str) -> None:
+    @Slot(str)
+    def _on_select(self, value: str) -> None:
+        config = self._ctx.config
+
         match value:
             case Values.NONE:
-                self._ctx.config.prefix_mode = PrefixMode.NONE
+                config.prefix_mode = PrefixMode.NONE
             case Values.CLOSEST:
-                self._ctx.config.prefix_mode = PrefixMode.CLOSEST
+                config.prefix_mode = PrefixMode.CLOSEST
             case Values.ALL:
-                self._ctx.config.prefix_mode = PrefixMode.ALL
+                config.prefix_mode = PrefixMode.ALL

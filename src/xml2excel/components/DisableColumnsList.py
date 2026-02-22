@@ -2,16 +2,17 @@ import pandas as pd
 from PySide6.QtWidgets import QLabel, QScrollArea, QVBoxLayout, QWidget
 
 from xml2excel.aliases import DataFrameTuple
+from xml2excel.components import App
 from xml2excel.components.DisableColumnsItem import DisableColumnsItem
-from xml2excel.manager.context import GlobalContext
 
 
 class DisableColumnsList(QWidget):
-    def __init__(self, ctx: GlobalContext, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self._ctx = ctx
-        self._ctx.store.trace('data', self._on_data_change)
+        self.app = App.instance()
+
+        self.app.store.trace('data', self._on_data_change)
 
         self._layout = QVBoxLayout(self)
 
@@ -28,7 +29,7 @@ class DisableColumnsList(QWidget):
         self._scrollarea.setWidget(self._scrollarea_widget)
 
     def _reset(self):
-        self._ctx.config.ignore_columns = []
+        self.app.config.ignore_columns = []
 
         for i in range(self._scrollarea_layout.count()):
             item = self._scrollarea_layout.itemAt(i)
@@ -46,5 +47,5 @@ class DisableColumnsList(QWidget):
         df = pd.concat(data)
 
         for column in df.columns:
-            item = DisableColumnsItem(self._ctx, text=column)
+            item = DisableColumnsItem(text=column)
             self._scrollarea_layout.addWidget(item)

@@ -3,7 +3,7 @@ from enum import StrEnum
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QComboBox, QLabel, QVBoxLayout, QWidget
 
-from xml2excel.manager.context import GlobalContext
+from xml2excel.components import App
 from xml2excel.utils.flatten_xml import PrefixMode
 
 
@@ -20,10 +20,10 @@ class PrefixOption(QWidget):
         Values.ALL,
     ]
 
-    def __init__(self, ctx: GlobalContext, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self._ctx = ctx
+        self.app = App.instance()
 
         self._layout = QVBoxLayout(self)
 
@@ -31,7 +31,7 @@ class PrefixOption(QWidget):
 
         self._combobox = QComboBox(self)
         self._combobox.addItems(self.VALUES)
-        self._combobox.setCurrentIndex(self._ctx.config.prefix_mode)
+        self._combobox.setCurrentIndex(self.app.config.prefix_mode)
         self._combobox.currentTextChanged.connect(self._on_select)
 
         self._layout.addWidget(self._label)
@@ -39,7 +39,7 @@ class PrefixOption(QWidget):
 
     @Slot(str)
     def _on_select(self, value: str) -> None:
-        config = self._ctx.config
+        config = self.app.config
 
         match value:
             case Values.NONE:

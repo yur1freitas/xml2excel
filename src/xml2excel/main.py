@@ -16,12 +16,9 @@ from xml2excel.components import (
     RecursiveOption,
     Window,
 )
-from xml2excel.manager.context import GlobalContext
 
 
 def main():
-    ctx = GlobalContext()
-
     app = App(sys.argv)
     window = Window()
 
@@ -40,23 +37,22 @@ def main():
     widget = QWidget()
     layout = QGridLayout(widget)
 
-    import_files_btn = ImportFilesButton(ctx, text='Importar XMLs')
-    export_files_btn = ExportFilesButton(ctx, text='Exportar')
+    import_files_btn = ImportFilesButton(text='Importar XMLs')
+    export_files_btn = ExportFilesButton(text='Exportar')
 
-    number_files_imported = NumberFilesImported(ctx)
+    number_files_imported = NumberFilesImported()
 
-    merge_option = MergeOption(ctx, text='Mesclar arquivos na exportação?')
+    merge_option = MergeOption(text='Mesclar arquivos na exportação?')
     index_option = IndexOption(
-        ctx, text='Incluir coluna de índice? (importe novamente para atualizar)'
+        text='Incluir coluna de índice? (importe novamente para atualizar)'
     )
     recursive_option = RecursiveOption(
-        ctx,
         text='Analisar subdiretórios ao importar?',
     )
 
-    prefix_option = PrefixOption(ctx)
+    prefix_option = PrefixOption()
 
-    disable_columns_list = DisableColumnsList(ctx)
+    disable_columns_list = DisableColumnsList()
     disable_columns_list.setFixedHeight(300)
 
     layout.addWidget(import_files_btn, 0, 0)

@@ -8,19 +8,19 @@ from xml2excel.commands.export_files import (
     ExportFilesInput,
     export_files,
 )
+from xml2excel.components import App
 from xml2excel.consts import FileExtensions
-from xml2excel.manager.context import GlobalContext
 from xml2excel.utils.path import resolve_filepath
 
 
 class ExportFilesButton(QPushButton):
     DIALOG_TITLE = 'Exportar'
 
-    def __init__(self, ctx: GlobalContext, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self._ctx = ctx
-        self._ctx.store.trace('data', self._update_state)
+        self.app = App.instance()
+        self.app.store.trace('data', self._update_state)
 
         self.clicked.connect(self._click)
 
@@ -29,8 +29,8 @@ class ExportFilesButton(QPushButton):
 
     @Slot()
     def _click(self):
-        store = self._ctx.store
-        config = self._ctx.config
+        store = self.app.store
+        config = self.app.config
 
         if store.data is None:
             return

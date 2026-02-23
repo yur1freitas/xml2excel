@@ -9,7 +9,7 @@ from xml2excel.commands.export_files import (
     export_files,
 )
 from xml2excel.components import App
-from xml2excel.consts import FileExtensions
+from xml2excel.consts import FileExtensions, FileGlobs
 from xml2excel.utils.path import resolve_filepath
 
 
@@ -40,12 +40,12 @@ class ExportFilesButton(QPushButton):
                 self,
                 caption=self.DIALOG_TITLE,
                 filter=FileExtensions.EXCEL,
-            )
+            )[0]
 
             if filepath:
                 export_files(
                     ExportFilesInput(
-                        output=filepath,
+                        output=Path(filepath).with_suffix(FileExtensions.EXCEL),
                         data=store.data,
                         index=config.index,
                         merge=config.merge,

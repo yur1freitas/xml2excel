@@ -1,7 +1,8 @@
 import sys
 from pathlib import Path
+from typing import Iterator
 
-from xml2excel.aliases import AnyPath, PathTuple
+from xml2excel.aliases import AnyPath
 from xml2excel.consts import FileExtensions
 
 
@@ -33,10 +34,10 @@ def find_files(
     root: AnyPath,
     glob: str,
     recursive: bool = True,
-) -> PathTuple:
+) -> Iterator[Path]:
     path = Path(root)
 
     if recursive:
-        return tuple(path.rglob(glob))
+        return path.rglob(glob)
 
-    return tuple(path.glob(glob))
+    return path.glob(glob)

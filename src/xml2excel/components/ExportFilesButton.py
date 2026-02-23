@@ -39,7 +39,7 @@ class ExportFilesButton(QPushButton):
             filepath = QFileDialog.getSaveFileName(
                 self,
                 caption=self.DIALOG_TITLE,
-                filter=FileExtensions.EXCEL,
+                filter=FileGlobs.EXCEL,
             )[0]
 
             if filepath:

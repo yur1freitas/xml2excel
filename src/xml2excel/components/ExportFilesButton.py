@@ -36,7 +36,7 @@ class ExportFilesButton(QPushButton):
             return
 
         if config.merge:
-            filepath = QFileDialog.getOpenFileName(
+            filepath = QFileDialog.getSaveFileName(
                 self,
                 caption=self.DIALOG_TITLE,
                 filter=FileExtensions.EXCEL,

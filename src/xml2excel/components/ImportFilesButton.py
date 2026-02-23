@@ -1,7 +1,9 @@
+from pandas import DataFrame
+from PIL.ImagePath import Path
 from PySide6.QtCore import QThread, Slot
 from PySide6.QtWidgets import QFileDialog, QPushButton
 
-from xml2excel.aliases import AnyPath, AnyPathTuple, DataFrameTuple
+from xml2excel.aliases import AnyPath
 from xml2excel.commands.import_files import import_files
 from xml2excel.components import App
 from xml2excel.utils.flatten_xml import PrefixMode
@@ -24,13 +26,12 @@ class ImportFilesWorker(Worker):
     def run(self):
         self.started.emit()
 
-        output = import_files(
+        for data in import_files(
             path=self.path,
             recursive=self.recursive,
             prefix_mode=self.prefix_mode,
-        )
-
-        self.progress.emit(output)
+        ):
+            self.progress.emit(data)
 
         self.finished.emit()
 
@@ -55,6 +56,9 @@ class ImportFilesButton(QPushButton):
         )
 
         if dirpath:
+            store.data = ()
+            store.filepaths = ()
+
             self._thread = QThread()
 
             self._worker = ImportFilesWorker(
@@ -70,17 +74,26 @@ class ImportFilesButton(QPushButton):
 
             @Slot()
             def on_started():
+                store.pending = True
                 self.setEnabled(False)
 
             @Slot(tuple)
-            def on_progress(output: tuple[DataFrameTuple, AnyPathTuple]):
-                data, filepaths = output
+            def on_progress(data: tuple[Path, DataFrame]):
+                filepath, df = data
 
-                store.data = data
-                store.filepaths = filepaths
+                if store.data is not None:
+                    store.data = (*store.data, df)
+                else:
+                    store.data = (df,)
+
+                if store.filepaths is not None:
+                    store.filepaths = (*store.filepaths, filepath)
+                else:
+                    store.filepaths = (filepath,)
 
             @Slot()
             def on_finished():
+                store.pending = False
                 self.setEnabled(True)
 
                 self._thread.quit()

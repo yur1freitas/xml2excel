@@ -1,7 +1,6 @@
 import pandas as pd
 from PySide6.QtWidgets import QLabel, QScrollArea, QVBoxLayout, QWidget
 
-from xml2excel.aliases import DataFrameTuple
 from xml2excel.components import App
 from xml2excel.components.DisableColumnsItem import DisableColumnsItem
 
@@ -12,7 +11,7 @@ class DisableColumnsList(QWidget):
 
         self.app = App.instance()
 
-        self.app.store.trace('data', self._on_data_change)
+        self.app.store.trace('pending', self._on_data_change)
 
         self._layout = QVBoxLayout(self)
 
@@ -38,8 +37,13 @@ class DisableColumnsList(QWidget):
             if widget:
                 widget.setParent(None)
 
-    def _on_data_change(self, data: DataFrameTuple | None) -> None:
+    def _on_data_change(self, pending: bool) -> None:
         self._reset()
+
+        if pending:
+            return
+
+        data = self.app.store.data
 
         if not data:
             return

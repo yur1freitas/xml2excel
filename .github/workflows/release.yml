@@ -1,0 +1,58 @@
+name: Release
+on:
+    push:
+        branches:
+            - main
+        tags:
+            - "v*"
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v7
+              with:
+                  version: "0.10.0"
+
+            - name: Install dependencies
+              run: uv sync
+
+            - name: Build executable
+              run: |
+                  uv run pyinstaller \
+                    --onefile \
+                    -n xml2excel \
+                    --icon assets/xml2excel.ico \
+                    -w src/xml2excel/main.py
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ matrix.os }}-exe
+                  path: dist/
+
+            - name: Generate a changelog
+              uses: orhun/git-cliff-action@v4
+              env:
+                  OUTPUT: CHANGELOG.md
+                  GITHUB_REPO: ${{ github.repository }}
+
+            - name: Create GitHub Release
+              id: gh_release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  name: Release ${{ github.ref_name }}
+                  body: ${{ steps.changelog.outputs.changelog }}
+                  draft: false
+                  prerelease: false
+                  files: ${{ steps.package.outputs.archive }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

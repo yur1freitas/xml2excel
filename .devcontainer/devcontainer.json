@@ -1,15 +1,26 @@
 {
+    "name": "xml2excel",
+    "remoteUser": "dev",
     "build": { "dockerfile": "Dockerfile", "context": "." },
-    "workspaceFolder": "/workspaces/xml2excel",
     "containerEnv": {
-        "DISPLAY": "${env:DISPLAY}"
+        "DISPLAY": "${localEnv:DISPLAY}"
     },
-    "runArgs": [
-        "--network",
-        "host",
-        "-v",
-        "/tmp/.X11-unix:/tmp/.X11-unix:rw",
-        "-v",
-        "/var/run/docker.sock:/var/run/docker.sock"
-    ]
+    "mounts": ["source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"],
+    "args": {
+        "TZ": "${localEnv:TZ}",
+        "LANG": "${localEnv:LANG}",
+        "LC_ALL": "${localEnv:LC_ALL}",
+        "LANGUAGE": "${localEnv:LOCALE}"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2.5.7": {
+            "installZsh": false,
+            "username": "dev",
+            "userUid": "1000",
+            "userGid": "1000",
+            "upgradePackages": true
+        },
+        "ghcr.io/devcontainers/features/git:1.3.5": {}
+    },
+    "postCreateCommand": ["/bin/sh", ".devcontainer/postCreateCommand.sh"]
 }

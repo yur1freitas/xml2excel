@@ -13,6 +13,7 @@ from xml2excel.components import (
     NumberFilesImported,
     PrefixOption,
     RecursiveOption,
+    ToggleThemeButton,
     Window,
 )
 from xml2excel.utils.path import resource_path
@@ -32,11 +33,13 @@ def main():
 
     root_layout.setColumnStretch(0, 1)
     root_layout.setColumnStretch(1, 1)
-    root_layout.setColumnStretch(2, 1)
+    root_layout.setColumnStretch(3, 1)
 
     widget = QWidget()
     layout = QGridLayout(widget)
     layout.setContentsMargins(0, 0, 0, 0)
+
+    toggle_theme_btn = ToggleThemeButton()
 
     import_files_btn = ImportFilesButton(text='Importar XMLs')
     export_files_btn = ExportFilesButton(text='Exportar')
@@ -75,6 +78,13 @@ def main():
     layout.addWidget(prefix_option, 5, 0, 1, 2)
 
     layout.addWidget(disable_columns_list, 6, 0, 4, 2)
+
+    root_layout.addWidget(
+        toggle_theme_btn,
+        0,
+        2,
+        alignment=QtCore.Qt.AlignmentFlag.AlignTop,
+    )
 
     root_layout.addWidget(
         widget,

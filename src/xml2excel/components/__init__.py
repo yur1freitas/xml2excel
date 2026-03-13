@@ -8,11 +8,13 @@ from .MergeOption import MergeOption
 from .NumberFilesImported import NumberFilesImported
 from .PrefixOption import PrefixOption
 from .RecursiveOption import RecursiveOption
+from .ToggleThemeButton import ToggleThemeButton
 from .Window import Window
 
 __all__ = [
     'App',
     'Window',
+    'ToggleThemeButton',
     'DisableColumnsItem',
     'DisableColumnsList',
     'ExportFilesButton',

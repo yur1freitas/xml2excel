@@ -120,3 +120,8 @@ QPushButton#ExportFilesButton QLabel#Label,
 QPushButton#ImportFilesButton QLabel#Label {{
     background: transparent;
 }}
+
+QPushButton#ToggleThemeButton {{
+    border-radius: 8px;
+    qproperty-icon: {THEME_ICON};
+}}

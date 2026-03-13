@@ -1,5 +1,6 @@
+from pathlib import Path
+
 from pandas import DataFrame
-from PIL.ImagePath import Path
 from PySide6.QtCore import QThread, Slot
 from PySide6.QtWidgets import (
     QFileDialog,

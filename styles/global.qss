@@ -1,0 +1,107 @@
+QWidget {{
+    color: {TEXT};
+    background-color: {BACKGROUND};
+}}
+
+QMainWindow {{
+    background-color: {BACKGROUND};
+}}
+
+QLabel {{
+    color: {TEXT};
+}}
+
+QPushButton {{
+    height: 32px;
+    padding: 0 10px;
+    color: {TEXT};
+    border-radius: 12px;
+    border: 1px solid {BORDER};
+    background-color: {PRIMARY};
+}}
+
+QPushButton:hover {{
+    background-color: {BORDER};
+}}
+
+QPushButton:disabled {{
+    color: {TEXT_DISABLED};
+}}
+
+QCheckBox {{
+    color: {TEXT};
+}}
+
+QCheckBox::indicator {{
+    width: 16px;
+    height: 16px;
+    color: {TEXT};
+    border-radius: 4px;
+    border: 1px solid {BORDER};
+    background-color: {PRIMARY};
+}}
+
+QCheckBox::indicator:checked {{
+  image: {CHECK_ICON};
+  background-color: {TEXT};
+  border: 1px solid {TEXT};
+}}
+
+QComboBox {{
+    height: 32px;
+    padding: 0 10px;
+    color: {TEXT};
+    border-radius: 4px;
+    border: 1px solid {BORDER};
+    background-color: {PRIMARY};
+}}
+
+QComboBox::drop-down {{
+    width: 16px;
+    border: none;
+    color: {TEXT};
+    image: {CHEVRON_DOWN_ICON};
+    margin-right: 4px;
+}}
+
+QComboBox:hover {{
+    background-color: {BORDER};
+}}
+
+QComboBox::item {{
+    height: 32px;
+    color: {TEXT};
+    border-radius: 0px;
+}}
+
+QComboBox::item:selected {{
+    background-color: {BORDER};
+}}
+
+QComboBox QAbstractItemView {{
+    border: 1px solid {BORDER};
+    background-color: {BACKGROUND};
+}}
+
+QScrollArea {{
+    border: none;
+}}
+
+QScrollBar {{
+    border: none;
+}}
+
+QScrollBar::handle {{
+    border: none;
+    border-radius: 7px;
+    border: 1px solid {BORDER};
+    background-color: {PRIMARY};
+}}
+
+QScrollBar::add-line,
+QScrollBar::sub-line {{
+    border: 0;
+    background: transparent;
+    width: 0px;
+    height: 0px;
+}}

@@ -2,7 +2,6 @@ import sys
 
 from PySide6 import QtAsyncio, QtCore
 from PySide6.QtWidgets import QGridLayout, QWidget
-from qt_material import apply_stylesheet
 
 from xml2excel.components import (
     App,
@@ -16,17 +15,18 @@ from xml2excel.components import (
     RecursiveOption,
     Window,
 )
+from xml2excel.utils.path import resource_path
 
 
 def main():
     app = App(sys.argv)
     window = Window()
 
-    apply_stylesheet(app, theme='dark_blue.xml')
+    app.load_stylesheet(resource_path('styles/global.qss'))
 
     root = QWidget()
-
     root_layout = QGridLayout(root)
+
     root.setLayout(root_layout)
     window.setCentralWidget(root)
 
@@ -36,6 +36,7 @@ def main():
 
     widget = QWidget()
     layout = QGridLayout(widget)
+    layout.setContentsMargins(0, 0, 0, 0)
 
     import_files_btn = ImportFilesButton(text='Importar XMLs')
     export_files_btn = ExportFilesButton(text='Exportar')

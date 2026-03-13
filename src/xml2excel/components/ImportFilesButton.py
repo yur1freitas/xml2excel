@@ -1,7 +1,13 @@
 from pandas import DataFrame
 from PIL.ImagePath import Path
 from PySide6.QtCore import QThread, Slot
-from PySide6.QtWidgets import QFileDialog, QPushButton
+from PySide6.QtWidgets import (
+    QFileDialog,
+    QFrame,
+    QGridLayout,
+    QLabel,
+    QPushButton,
+)
 
 from xml2excel.aliases import AnyPath
 from xml2excel.commands.import_files import import_files
@@ -39,10 +45,29 @@ class ImportFilesWorker(Worker):
 class ImportFilesButton(QPushButton):
     DIALOG_TITLE = 'Importar XMLs'
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, text: str):
+        super().__init__()
+
+        self.setObjectName(self.__class__.__name__)
 
         self.app = App.instance()
+
+        self._layout = QGridLayout(self)
+        self._layout.setContentsMargins(8, 0, 8, 0)
+
+        self._layout.setColumnStretch(0, 1)
+        self._layout.setColumnStretch(3, 1)
+
+        self._icon = QFrame()
+        self._icon.setFixedSize(16, 16)
+        self._icon.setObjectName('Icon')
+
+        self._label = QLabel(text)
+        self._label.setObjectName('Label')
+
+        self._layout.addWidget(self._icon, 0, 1)
+        self._layout.addWidget(self._label, 0, 2)
+
         self.clicked.connect(self._runtask)
 
     @Slot()

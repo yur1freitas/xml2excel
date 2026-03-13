@@ -105,3 +105,18 @@ QScrollBar::sub-line {{
     width: 0px;
     height: 0px;
 }}
+
+QPushButton#ImportFilesButton QFrame#Icon {{
+    image: {FOLDER_UP_ICON};
+    background: transparent;
+}}
+
+QPushButton#ExportFilesButton QFrame#Icon {{
+    image: {FILE_DOWN_ICON};
+    background: transparent;
+}}
+
+QPushButton#ExportFilesButton QLabel#Label,
+QPushButton#ImportFilesButton QLabel#Label {{
+    background: transparent;
+}}

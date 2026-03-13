@@ -20,6 +20,8 @@ class DarkTheme(StrEnum):
     PRIMARY = '#1c1c1c'
     CHECK_ICON = f'url({resource_path("icons/check_dark.svg")})'
     CHEVRON_DOWN_ICON = f'url({resource_path("icons/chevron-down_dark.svg")})'
+    FOLDER_UP_ICON = f'url({resource_path("icons/folder-up_dark.svg")})'
+    FILE_DOWN_ICON = f'url({resource_path("icons/file-down_dark.svg")})'
 
 
 class LightTheme(StrEnum):
@@ -30,6 +32,8 @@ class LightTheme(StrEnum):
     PRIMARY = '#f5f5f5'
     CHECK_ICON = f'url({resource_path("icons/check_light.svg")})'
     CHEVRON_DOWN_ICON = f'url({resource_path("icons/chevron-down_light.svg")})'
+    FOLDER_UP_ICON = f'url({resource_path("icons/folder-up_light.svg")})'
+    FILE_DOWN_ICON = f'url({resource_path("icons/file-down_light.svg")})'
 
 
 class Theme(QObject):

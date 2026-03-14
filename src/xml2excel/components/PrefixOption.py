@@ -4,20 +4,21 @@ from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QComboBox, QLabel, QVBoxLayout, QWidget
 
 from xml2excel.components import App
+from xml2excel.utils.flatdict2excel import ColumnPrefixStyle
 from xml2excel.utils.flatten_xml import PrefixMode
 
 
 class Values(StrEnum):
     NONE = 'Nenhum'
-    CLOSEST = 'Uma Tag Pai'
-    ALL = 'Todas as Tags Pai'
+    PARENT = 'Uma Tag Pai'
+    HIERARCHICAL = 'Todas as Tags Pai'
 
 
 class PrefixOption(QWidget):
     VALUES: list[str] = [
         Values.NONE,
-        Values.CLOSEST,
-        Values.ALL,
+        Values.PARENT,
+        Values.HIERARCHICAL,
     ]
 
     def __init__(self, **kwargs):
@@ -43,8 +44,8 @@ class PrefixOption(QWidget):
 
         match value:
             case Values.NONE:
-                config.prefix_mode = PrefixMode.NONE
-            case Values.CLOSEST:
-                config.prefix_mode = PrefixMode.CLOSEST
-            case Values.ALL:
-                config.prefix_mode = PrefixMode.ALL
+                config.prefix_mode = ColumnPrefixStyle.NONE
+            case Values.PARENT:
+                config.prefix_mode = ColumnPrefixStyle.PARENT
+            case Values.HIERARCHICAL:
+                config.prefix_mode = ColumnPrefixStyle.HIERARCHICAL

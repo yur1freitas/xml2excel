@@ -9,7 +9,6 @@ from PySide6.QtWidgets import (
     QPushButton,
 )
 
-from xml2excel.aliases import DataFrameTuple
 from xml2excel.commands.export_files import (
     ExportFilesInput,
     export_files,
@@ -17,6 +16,7 @@ from xml2excel.commands.export_files import (
 from xml2excel.components import App
 from xml2excel.consts import FileExtensions, FileGlobs
 from xml2excel.utils.path import resolve_filepath
+from xml2excel.utils.xml2flatdict import XMLData
 
 
 class ExportFilesButton(QPushButton):
@@ -48,7 +48,7 @@ class ExportFilesButton(QPushButton):
 
         self.clicked.connect(self._click)
 
-    def _update_state(self, data: DataFrameTuple) -> None:
+    def _update_state(self, data: tuple[XMLData]) -> None:
         self.setDisabled(data is None)
 
     @Slot()

@@ -5,7 +5,6 @@ from PySide6.QtWidgets import QComboBox, QLabel, QVBoxLayout, QWidget
 
 from xml2excel.components import App
 from xml2excel.utils.flatdict2excel import ColumnPrefixStyle
-from xml2excel.utils.flatten_xml import PrefixMode
 
 
 class Values(StrEnum):

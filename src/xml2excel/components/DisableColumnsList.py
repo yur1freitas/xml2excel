@@ -1,4 +1,3 @@
-import pandas as pd
 from PySide6.QtWidgets import QLabel, QScrollArea, QVBoxLayout, QWidget
 
 from xml2excel.components import App

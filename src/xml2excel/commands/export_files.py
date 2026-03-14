@@ -1,14 +1,13 @@
 from dataclasses import dataclass
 
-import pandas as pd
-
-from xml2excel.aliases import AnyPath, AnyPathTuple, DataFrameTuple
-from xml2excel.utils.pd import export_df
+from xml2excel.aliases import AnyPath, AnyPathTuple
+from xml2excel.utils.flatdict2excel import FlatDict2Excel
+from xml2excel.utils.xml2flatdict import XMLData
 
 
 @dataclass
 class ExportFilesInput:
-    data: DataFrameTuple
+    data: tuple[XMLData]
     output: AnyPath | AnyPathTuple
     merge: bool = True
     index: bool = False
@@ -30,16 +29,8 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
                 'O parâmetro "path" deve ser um caminho de arquivo válido quando merge=True'
             )
 
-        data = pd.concat(input.data, ignore_index=True)
-
-        if input.ignore_columns is not None:
-            data = data.drop(
-                columns=input.ignore_columns, inplace=False, errors='ignore'
-            )
-
-        data = data.dropna(how='all')
-
-        export_df(input.output, data, index=input.index)
+        flatdict2excel = FlatDict2Excel(input.output, input.ignore_columns)
+        flatdict2excel(*input.data)
 
         return ExportFilesOutput(merged=input.merge)
 
@@ -54,11 +45,7 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
         )
 
     for data, filepath in zip(input.data, input.output):
-        if input.ignore_columns is not None:
-            data = data.drop(columns=input.ignore_columns, errors='ignore')
-
-        data = data.dropna(how='all')
-
-        export_df(data, filepath, index=input.index)
+        flatdict2excel = FlatDict2Excel(filepath, input.ignore_columns)
+        flatdict2excel(*data)
 
     return ExportFilesOutput(merged=input.merge)

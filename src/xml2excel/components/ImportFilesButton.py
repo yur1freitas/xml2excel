@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from pandas import DataFrame
 from PySide6.QtCore import QThread, Slot
 from PySide6.QtWidgets import (
     QFileDialog,
@@ -13,8 +12,9 @@ from PySide6.QtWidgets import (
 from xml2excel.aliases import AnyPath
 from xml2excel.commands.import_files import import_files
 from xml2excel.components import App
-from xml2excel.utils.flatten_xml import PrefixMode
+from xml2excel.utils.flatdict2excel import ColumnPrefixStyle
 from xml2excel.utils.worker import Worker
+from xml2excel.utils.xml2flatdict import XMLData
 
 
 class ImportFilesWorker(Worker):
@@ -22,7 +22,7 @@ class ImportFilesWorker(Worker):
         self,
         path: AnyPath,
         recursive: bool = False,
-        prefix_mode: PrefixMode = PrefixMode.CLOSEST,
+        prefix_mode: ColumnPrefixStyle = ColumnPrefixStyle.PARENT,
     ):
         super().__init__()
 
@@ -33,11 +33,7 @@ class ImportFilesWorker(Worker):
     def run(self):
         self.started.emit()
 
-        for data in import_files(
-            path=self.path,
-            recursive=self.recursive,
-            prefix_mode=self.prefix_mode,
-        ):
+        for data in import_files(path=self.path, recursive=self.recursive):
             self.progress.emit(data)
 
         self.finished.emit()
@@ -82,7 +78,7 @@ class ImportFilesButton(QPushButton):
         )
 
         if dirpath:
-            store.data = ()
+            store.data = ()  # ty: ignore
             store.filepaths = ()
 
             self._thread = QThread()
@@ -104,11 +100,11 @@ class ImportFilesButton(QPushButton):
                 self.setEnabled(False)
 
             @Slot(tuple)
-            def on_progress(data: tuple[Path, DataFrame]):
+            def on_progress(data: tuple[Path, XMLData]):
                 filepath, df = data
 
                 if store.data is not None:
-                    store.data = (*store.data, df)
+                    store.data = (*store.data, df)  # ty: ignore
                 else:
                     store.data = (df,)
 

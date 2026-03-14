@@ -130,6 +130,7 @@ class FlatDict2Excel:
 
     def __call__(self, *args: flatdict):
         for arg in args:
-            self._resolve_dict(None, arg)
+            if len(arg) > 0:
+                self._resolve_dict(None, arg)
 
         self.workbook.close()

@@ -48,8 +48,14 @@ class DisableColumnsList(QWidget):
         if not data:
             return
 
-        df = pd.concat(data)
+        keys = set()
 
-        for column in df.columns:
-            item = DisableColumnsItem(text=column)
-            self._scrollarea_layout.addWidget(item)
+        for d in data:
+            for k in d.iterkeys():
+                if k in keys:
+                    continue
+
+                item = DisableColumnsItem(text=k)
+                self._scrollarea_layout.addWidget(item)
+
+                keys.add(k)

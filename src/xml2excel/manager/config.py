@@ -1,6 +1,6 @@
 from typing import Callable
 
-from xml2excel.utils.flatten_xml import PrefixMode
+from xml2excel.utils.flatdict2excel import ColumnPrefixStyle
 from xml2excel.utils.var import Variable
 
 
@@ -8,14 +8,14 @@ class Config:
     _merge: Variable[bool]
     _index: Variable[bool]
     _recursive: Variable[bool]
-    _prefix_mode: Variable[PrefixMode]
+    _prefix_mode: Variable[ColumnPrefixStyle]
     _ignore_columns: Variable[list[str] | None]
 
     def __init__(self):
         self._merge = Variable(True)
         self._index = Variable(False)
         self._recursive = Variable(False)
-        self._prefix_mode = Variable(PrefixMode.CLOSEST)
+        self._prefix_mode = Variable(ColumnPrefixStyle.HIERARCHICAL)
         self._ignore_columns = Variable(None)
 
     @property
@@ -31,7 +31,7 @@ class Config:
         return self._recursive.get()
 
     @property
-    def prefix_mode(self) -> PrefixMode:
+    def prefix_mode(self) -> ColumnPrefixStyle:
         return self._prefix_mode.get()
 
     @property
@@ -51,7 +51,7 @@ class Config:
         self._recursive.set(value)
 
     @prefix_mode.setter
-    def prefix_mode(self, value: PrefixMode) -> None:
+    def prefix_mode(self, value: ColumnPrefixStyle) -> None:
         self._prefix_mode.set(value)
 
     @ignore_columns.setter

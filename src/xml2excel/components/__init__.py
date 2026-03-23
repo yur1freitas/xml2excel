@@ -1,6 +1,4 @@
 from .App import App
-from .DisableColumnsItem import DisableColumnsItem
-from .DisableColumnsList import DisableColumnsList
 from .ExportFilesButton import ExportFilesButton
 from .ImportFilesButton import ImportFilesButton
 from .IndexOption import IndexOption
@@ -9,14 +7,14 @@ from .NumberFilesImported import NumberFilesImported
 from .PrefixOption import PrefixOption
 from .RecursiveOption import RecursiveOption
 from .ToggleThemeButton import ToggleThemeButton
+from .tree.ColumnTreeRoot import ColumnTreeRoot
 from .Window import Window
 
 __all__ = [
     'App',
     'Window',
+    'ColumnTreeRoot',
     'ToggleThemeButton',
-    'DisableColumnsItem',
-    'DisableColumnsList',
     'ExportFilesButton',
     'ImportFilesButton',
     'IndexOption',

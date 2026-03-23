@@ -125,3 +125,24 @@ QPushButton#ToggleThemeButton {{
     border-radius: 8px;
     qproperty-icon: {THEME_ICON};
 }}
+
+QFrame#CollapsibleTrigger[expanded="false"] QFrame#Icon {{
+    image: {CHEVRON_RIGHT_ICON};
+}}
+
+QFrame#CollapsibleTrigger[expanded="true"] QFrame#Icon {{
+    image: {CHEVRON_DOWN_ICON};
+}}
+
+QFrame#CollapsibleTrigger {{
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid {BORDER};
+    border-radius: 12px;
+    background-color: {BACKGROUND};
+}}
+
+QFrame#CollapsibleContent {{
+    padding: 0 0 0 10px;
+    border-left: 1px solid {BORDER};
+}}

@@ -21,6 +21,7 @@ class DarkTheme(StrEnum):
     CHECK_ICON = f'url({resource_path("icons/check_dark.svg")})'
     THEME_ICON = f'url({resource_path("icons/moon.svg")})'
     CHEVRON_DOWN_ICON = f'url({resource_path("icons/chevron-down_dark.svg")})'
+    CHEVRON_RIGHT_ICON = f'url({resource_path("icons/chevron-right_dark.svg")})'
     FOLDER_UP_ICON = f'url({resource_path("icons/folder-up_dark.svg")})'
     FILE_DOWN_ICON = f'url({resource_path("icons/file-down_dark.svg")})'
 
@@ -34,6 +35,9 @@ class LightTheme(StrEnum):
     THEME_ICON = f'url({resource_path("icons/sun.svg")})'
     CHECK_ICON = f'url({resource_path("icons/check_light.svg")})'
     CHEVRON_DOWN_ICON = f'url({resource_path("icons/chevron-down_light.svg")})'
+    CHEVRON_RIGHT_ICON = (
+        f'url({resource_path("icons/chevron-right_light.svg")})'
+    )
     FOLDER_UP_ICON = f'url({resource_path("icons/folder-up_light.svg")})'
     FILE_DOWN_ICON = f'url({resource_path("icons/file-down_light.svg")})'
 

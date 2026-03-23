@@ -5,7 +5,6 @@ from PySide6.QtWidgets import QGridLayout, QWidget
 
 from xml2excel.components import (
     App,
-    DisableColumnsList,
     ExportFilesButton,
     ImportFilesButton,
     IndexOption,
@@ -16,6 +15,7 @@ from xml2excel.components import (
     ToggleThemeButton,
     Window,
 )
+from xml2excel.components.tree.ColumnTreeRoot import ColumnTreeRoot
 from xml2excel.utils.path import resource_path
 
 
@@ -31,13 +31,16 @@ def main():
     root.setLayout(root_layout)
     window.setCentralWidget(root)
 
+    root_layout.setRowStretch(0, 1)
     root_layout.setColumnStretch(0, 1)
     root_layout.setColumnStretch(1, 1)
     root_layout.setColumnStretch(3, 1)
 
     widget = QWidget()
+
     layout = QGridLayout(widget)
     layout.setContentsMargins(0, 0, 0, 0)
+    layout.setRowStretch(6, 1)
 
     toggle_theme_btn = ToggleThemeButton()
 
@@ -54,8 +57,7 @@ def main():
 
     prefix_option = PrefixOption()
 
-    disable_columns_list = DisableColumnsList()
-    disable_columns_list.setFixedHeight(300)
+    column_tree = ColumnTreeRoot()
 
     layout.addWidget(import_files_btn, 0, 0)
     layout.addWidget(export_files_btn, 0, 1)
@@ -75,7 +77,7 @@ def main():
 
     layout.addWidget(prefix_option, 5, 0, 1, 2)
 
-    layout.addWidget(disable_columns_list, 6, 0, 4, 2)
+    layout.addWidget(column_tree, 6, 0, 1, 2)
 
     root_layout.addWidget(
         toggle_theme_btn,
@@ -88,7 +90,6 @@ def main():
         widget,
         0,
         1,
-        alignment=QtCore.Qt.AlignmentFlag.AlignTop,
     )
 
     window.show()

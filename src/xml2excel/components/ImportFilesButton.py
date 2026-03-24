@@ -78,7 +78,7 @@ class ImportFilesButton(QPushButton):
         )
 
         if dirpath:
-            store.data = ()  # ty: ignore
+            store.data = ()
             store.filepaths = ()
 
             self._thread = QThread()
@@ -103,10 +103,7 @@ class ImportFilesButton(QPushButton):
             def on_progress(data: tuple[Path, XMLData]):
                 filepath, df = data
 
-                if store.data is not None:
-                    store.data = (*store.data, df)  # ty: ignore
-                else:
-                    store.data = (df,)
+                store.data = (*store.data, df)  # type: ignore
 
                 if store.filepaths is not None:
                     store.filepaths = (*store.filepaths, filepath)

@@ -44,9 +44,6 @@ class DisableColumnsList(QWidget):
 
         data = self.app.store.data
 
-        if not data:
-            return
-
         keys = set()
 
         for d in data:

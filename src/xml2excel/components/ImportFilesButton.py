@@ -103,7 +103,7 @@ class ImportFilesButton(QPushButton):
             def on_progress(data: tuple[Path, XMLData]):
                 filepath, df = data
 
-                store.data = (*store.data, df)  # type: ignore
+                store.data = (*store.data, df)
 
                 if store.filepaths is not None:
                     store.filepaths = (*store.filepaths, filepath)

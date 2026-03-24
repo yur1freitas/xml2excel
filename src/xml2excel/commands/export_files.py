@@ -7,7 +7,7 @@ from xml2excel.utils.xml2flatdict import XMLData
 
 @dataclass
 class ExportFilesInput:
-    data: tuple[XMLData]
+    data: tuple[XMLData, ...]
     output: AnyPath | AnyPathTuple
     merge: bool = True
     index: bool = False

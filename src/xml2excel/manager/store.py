@@ -6,7 +6,7 @@ from xml2excel.utils.xml2flatdict import XMLData
 
 
 class Store:
-    _data: Variable[tuple[XMLData]]
+    _data: Variable[tuple[XMLData, ...]]
     _filepaths: Variable[AnyPathTuple | None]
     _pending: Variable[bool]
 
@@ -16,7 +16,7 @@ class Store:
         self._pending = Variable(False)
 
     @property
-    def data(self) -> tuple[XMLData]:
+    def data(self) -> tuple[XMLData, ...]:
         return self._data.get()
 
     @property
@@ -28,7 +28,7 @@ class Store:
         return self._filepaths.get()
 
     @data.setter
-    def data(self, value: tuple[XMLData]):
+    def data(self, value: tuple[XMLData, ...]):
         self._data.set(value)
 
     @filepaths.setter

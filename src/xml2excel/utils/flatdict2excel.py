@@ -63,10 +63,12 @@ class FlatDict2Excel:
         filepath: AnyPath,
         ignore_columns: Iterable[str] = [],
         column_prefix_style: ColumnPrefixStyle = ColumnPrefixStyle.HIERARCHICAL,
+        index_column: bool = False,
     ):
         self.filepath = filepath
         self.ignore_columns = set(ignore_columns)
         self.column_prefix_style = column_prefix_style
+        self.index_column = index_column
 
         self.workbook = Workbook(filepath)
         self.worksheets = defaultdict[WorksheetId, CustomWorksheet](
@@ -80,6 +82,10 @@ class FlatDict2Excel:
         value: int | float | str,
     ) -> None:
         worksheet = self.worksheets[id]
+
+        if self.index_column:
+            worksheet.add_column('index', worksheet.row_idx)
+
         worksheet.add_column(key, value)
 
     def _resolve_list(self, id: WorksheetId, key: str, value: list) -> None:

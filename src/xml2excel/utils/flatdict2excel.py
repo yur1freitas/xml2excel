@@ -1,6 +1,6 @@
 from collections import defaultdict
 from enum import IntEnum
-from typing import TypeAlias, cast
+from typing import Iterable, TypeAlias, cast
 
 from xlsxwriter.workbook import Workbook
 from xlsxwriter.worksheet import Worksheet
@@ -61,11 +61,11 @@ class FlatDict2Excel:
     def __init__(
         self,
         filepath: AnyPath,
-        ignore_columns: list[str] | None = None,
+        ignore_columns: Iterable[str] = [],
         column_prefix_style: ColumnPrefixStyle = ColumnPrefixStyle.HIERARCHICAL,
     ):
         self.filepath = filepath
-        self.ignore_columns = set(ignore_columns or [])
+        self.ignore_columns = set(ignore_columns)
         self.column_prefix_style = column_prefix_style
 
         self.workbook = Workbook(filepath)

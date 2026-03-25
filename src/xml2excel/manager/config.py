@@ -8,15 +8,15 @@ class Config:
     _merge: Variable[bool]
     _index: Variable[bool]
     _recursive: Variable[bool]
-    _prefix_mode: Variable[ColumnPrefixStyle]
     _ignore_columns: Variable[set[str]]
+    _column_prefix_style: Variable[ColumnPrefixStyle]
 
     def __init__(self):
         self._merge = Variable(True)
         self._index = Variable(False)
         self._recursive = Variable(False)
-        self._prefix_mode = Variable(ColumnPrefixStyle.HIERARCHICAL)
         self._ignore_columns = Variable(set())
+        self._column_prefix_style = Variable(ColumnPrefixStyle.HIERARCHICAL)
 
     @property
     def merge(self) -> bool:
@@ -31,8 +31,8 @@ class Config:
         return self._recursive.get()
 
     @property
-    def prefix_mode(self) -> ColumnPrefixStyle:
-        return self._prefix_mode.get()
+    def column_prefix_style(self) -> ColumnPrefixStyle:
+        return self._column_prefix_style.get()
 
     @property
     def ignore_columns(self) -> set[str]:
@@ -50,9 +50,9 @@ class Config:
     def recursive(self, value: bool) -> None:
         self._recursive.set(value)
 
-    @prefix_mode.setter
-    def prefix_mode(self, value: ColumnPrefixStyle) -> None:
-        self._prefix_mode.set(value)
+    @column_prefix_style.setter
+    def column_prefix_style(self, value: ColumnPrefixStyle) -> None:
+        self._column_prefix_style.set(value)
 
     @ignore_columns.setter
     def ignore_columns(self, value: set[str]) -> None:
@@ -66,9 +66,9 @@ class Config:
                 self._index.trace(callback)
             case 'recursive':
                 self._recursive.trace(callback)
-            case 'prefix_mode':
-                self._prefix_mode.trace(callback)
             case 'ignore_columns':
                 self._ignore_columns.trace(callback)
+            case 'column_prefix_style':
+                self._column_prefix_style.trace(callback)
             case _:
                 raise ValueError(f'Esse atributo não existe: {attr}')

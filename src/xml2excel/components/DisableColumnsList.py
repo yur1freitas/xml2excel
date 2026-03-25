@@ -27,8 +27,6 @@ class DisableColumnsList(QWidget):
         self._scrollarea.setWidget(self._scrollarea_widget)
 
     def _reset(self):
-        self.app.config.ignore_columns = []
-
         for i in range(self._scrollarea_layout.count()):
             item = self._scrollarea_layout.itemAt(i)
             widget = item.widget() if item else None

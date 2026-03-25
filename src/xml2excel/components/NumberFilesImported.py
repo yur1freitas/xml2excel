@@ -14,8 +14,9 @@ class NumberFilesImported(QLabel):
         self.app.store.trace('filepaths', self._update_text)
 
     def _update_text(self, filepaths: AnyPathTuple):
-        if filepaths is not None:
-            amount = len(filepaths)
+        amount = len(filepaths)
+
+        if amount > 0:
             self.setText(f'Nº de arquivos importados: {amount}')
         else:
             self.setText(self.DEFAULT_MESSAGE)

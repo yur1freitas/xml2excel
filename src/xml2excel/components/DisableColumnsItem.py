@@ -16,13 +16,9 @@ class DisableColumnsItem(QCheckBox):
     @Slot()
     def _on_check(self):
         config = self.app.config
-
-        if config.ignore_columns is None:
-            return
-
         column = self.text()
 
         if column in config.ignore_columns:
             config.ignore_columns.remove(column)
         else:
-            config.ignore_columns.append(column)
+            config.ignore_columns.add(column)

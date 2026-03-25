@@ -9,14 +9,14 @@ class Config:
     _index: Variable[bool]
     _recursive: Variable[bool]
     _prefix_mode: Variable[ColumnPrefixStyle]
-    _ignore_columns: Variable[list[str] | None]
+    _ignore_columns: Variable[set[str]]
 
     def __init__(self):
         self._merge = Variable(True)
         self._index = Variable(False)
         self._recursive = Variable(False)
         self._prefix_mode = Variable(ColumnPrefixStyle.HIERARCHICAL)
-        self._ignore_columns = Variable(None)
+        self._ignore_columns = Variable(set())
 
     @property
     def merge(self) -> bool:
@@ -35,7 +35,7 @@ class Config:
         return self._prefix_mode.get()
 
     @property
-    def ignore_columns(self) -> list[str] | None:
+    def ignore_columns(self) -> set[str]:
         return self._ignore_columns.get()
 
     @merge.setter
@@ -55,7 +55,7 @@ class Config:
         self._prefix_mode.set(value)
 
     @ignore_columns.setter
-    def ignore_columns(self, value: list[str] | None) -> None:
+    def ignore_columns(self, value: set[str]) -> None:
         self._ignore_columns.set(value)
 
     def trace(self, attr: str, callback: Callable) -> None:

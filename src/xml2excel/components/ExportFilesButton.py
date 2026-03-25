@@ -74,6 +74,7 @@ class ExportFilesButton(QPushButton):
                         index=config.index,
                         merge=config.merge,
                         ignore_columns=config.ignore_columns,
+                        column_prefix_style=config.prefix_mode,
                     )
                 )
 
@@ -102,5 +103,6 @@ class ExportFilesButton(QPushButton):
                         index=config.index,
                         merge=config.merge,
                         ignore_columns=config.ignore_columns,
+                        column_prefix_style=config.prefix_mode,
                     )
                 )

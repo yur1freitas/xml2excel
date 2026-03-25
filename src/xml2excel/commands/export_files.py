@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from xml2excel.aliases import AnyPath, AnyPathTuple
-from xml2excel.utils.flatdict2excel import FlatDict2Excel
+from xml2excel.utils.flatdict2excel import ColumnPrefixStyle, FlatDict2Excel
 from xml2excel.utils.xml2flatdict import XMLData
 
 
@@ -12,6 +12,7 @@ class ExportFilesInput:
     ignore_columns: set[str]
     merge: bool = True
     index: bool = False
+    column_prefix_style: ColumnPrefixStyle = ColumnPrefixStyle.HIERARCHICAL
 
 
 @dataclass
@@ -29,7 +30,12 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
                 'O parâmetro "path" deve ser um caminho de arquivo válido quando merge=True'
             )
 
-        flatdict2excel = FlatDict2Excel(input.output, input.ignore_columns)
+        flatdict2excel = FlatDict2Excel(
+            input.output,
+            input.ignore_columns,
+            input.column_prefix_style,
+        )
+
         flatdict2excel(*input.data)
 
         return ExportFilesOutput(merged=input.merge)
@@ -45,7 +51,12 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
         )
 
     for data, filepath in zip(input.data, input.output):
-        flatdict2excel = FlatDict2Excel(filepath, input.ignore_columns)
+        flatdict2excel = FlatDict2Excel(
+            filepath,
+            input.ignore_columns,
+            input.column_prefix_style,
+        )
+
         flatdict2excel(*data)
 
     return ExportFilesOutput(merged=input.merge)

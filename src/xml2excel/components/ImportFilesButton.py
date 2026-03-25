@@ -104,11 +104,7 @@ class ImportFilesButton(QPushButton):
                 filepath, df = data
 
                 store.data = (*store.data, df)
-
-                if store.filepaths is not None:
-                    store.filepaths = (*store.filepaths, filepath)
-                else:
-                    store.filepaths = (filepath,)
+                store.filepaths = (*store.filepaths, filepath)
 
             @Slot()
             def on_finished():

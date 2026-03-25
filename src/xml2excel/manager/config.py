@@ -67,7 +67,7 @@ class Config:
             case 'recursive':
                 self._recursive.trace(callback)
             case 'prefix_mode':
-                self._merge.trace(callback)
+                self._prefix_mode.trace(callback)
             case 'ignore_columns':
                 self._ignore_columns.trace(callback)
             case _:

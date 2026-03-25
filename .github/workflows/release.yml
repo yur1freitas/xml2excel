@@ -88,7 +88,7 @@ jobs:
               uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ github.ref }}
-                  name: Release ${{ github.ref }}
+                  name: Release ${{ github.ref_name }}
                   body: ${{ steps.git-cliff.outputs.content }}
                   draft: false
                   prerelease: false

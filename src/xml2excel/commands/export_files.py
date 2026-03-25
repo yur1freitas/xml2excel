@@ -34,6 +34,7 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
             input.output,
             input.ignore_columns,
             input.column_prefix_style,
+            input.index,
         )
 
         flatdict2excel(*input.data)
@@ -55,6 +56,7 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
             filepath,
             input.ignore_columns,
             input.column_prefix_style,
+            input.index,
         )
 
         flatdict2excel(*data)

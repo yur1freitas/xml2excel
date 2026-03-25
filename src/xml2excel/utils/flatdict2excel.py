@@ -112,12 +112,7 @@ class FlatDict2Excel:
                 self._resolve_list(id, column_name, value)
 
     def _can_ignore_column(self, key: str) -> bool:
-        if len(self.ignore_columns) > 0:
-            for column_name in self.ignore_columns:
-                if key.startswith(column_name):
-                    return True
-
-        return False
+        return any(key.startswith(col) for col in self.ignore_columns)
 
     def _resolve_column_name(self, key: str, delimiter: str) -> str:
         match self.column_prefix_style:

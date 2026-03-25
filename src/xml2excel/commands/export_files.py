@@ -9,9 +9,9 @@ from xml2excel.utils.xml2flatdict import XMLData
 class ExportFilesInput:
     data: tuple[XMLData, ...]
     output: AnyPath | AnyPathTuple
+    ignore_columns: set[str]
     merge: bool = True
     index: bool = False
-    ignore_columns: list[str] | None = None
 
 
 @dataclass

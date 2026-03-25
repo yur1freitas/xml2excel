@@ -11,7 +11,7 @@ class ExportFilesInput:
     output: AnyPath | AnyPathTuple
     ignore_columns: set[str]
     merge: bool = True
-    index: bool = False
+    index_column: bool = False
     column_prefix_style: ColumnPrefixStyle = ColumnPrefixStyle.HIERARCHICAL
 
 
@@ -34,7 +34,7 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
             input.output,
             input.ignore_columns,
             input.column_prefix_style,
-            input.index,
+            input.index_column,
         )
 
         flatdict2excel(*input.data)
@@ -56,7 +56,7 @@ def export_files(input: ExportFilesInput) -> ExportFilesOutput:
             filepath,
             input.ignore_columns,
             input.column_prefix_style,
-            input.index,
+            input.index_column,
         )
 
         flatdict2excel(*data)

@@ -9,9 +9,9 @@ class IndexOption(QCheckBox):
         super().__init__(**kwargs)
 
         self.app = App.instance()
-        self.setChecked(self.app.config.index)
+        self.setChecked(self.app.config.index_column)
         self.stateChanged.connect(self._on_check)
 
     @Slot()
     def _on_check(self):
-        self.app.config.index = self.isChecked()
+        self.app.config.index_column = self.isChecked()

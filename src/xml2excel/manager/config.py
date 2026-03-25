@@ -6,15 +6,15 @@ from xml2excel.utils.var import Variable
 
 class Config:
     _merge: Variable[bool]
-    _index: Variable[bool]
     _recursive: Variable[bool]
+    _index_column: Variable[bool]
     _ignore_columns: Variable[set[str]]
     _column_prefix_style: Variable[ColumnPrefixStyle]
 
     def __init__(self):
         self._merge = Variable(True)
-        self._index = Variable(False)
         self._recursive = Variable(False)
+        self._index_column = Variable(False)
         self._ignore_columns = Variable(set())
         self._column_prefix_style = Variable(ColumnPrefixStyle.HIERARCHICAL)
 
@@ -23,8 +23,8 @@ class Config:
         return self._merge.get()
 
     @property
-    def index(self) -> bool:
-        return self._index.get()
+    def index_column(self) -> bool:
+        return self._index_column.get()
 
     @property
     def recursive(self) -> bool:
@@ -42,9 +42,9 @@ class Config:
     def merge(self, value: bool) -> None:
         self._merge.set(value)
 
-    @index.setter
-    def index(self, value: bool) -> None:
-        self._index.set(value)
+    @index_column.setter
+    def index_column(self, value: bool) -> None:
+        self._index_column.set(value)
 
     @recursive.setter
     def recursive(self, value: bool) -> None:
@@ -62,10 +62,10 @@ class Config:
         match attr:
             case 'merge':
                 self._merge.trace(callback)
-            case 'index':
-                self._index.trace(callback)
             case 'recursive':
                 self._recursive.trace(callback)
+            case 'index_column':
+                self._index_column.trace(callback)
             case 'ignore_columns':
                 self._ignore_columns.trace(callback)
             case 'column_prefix_style':

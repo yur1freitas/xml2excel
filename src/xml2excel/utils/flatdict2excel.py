@@ -29,7 +29,7 @@ class CustomWorksheet(Worksheet):
     def add_column(self, name: str, value: int | float | str) -> None:
         column_index = self.get_column_position(name)
 
-        if column_index:
+        if column_index is not None:
             self.write(self.row_idx, column_index, value)
         else:
             self.write(0, self.column_idx, name)

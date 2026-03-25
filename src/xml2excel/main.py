@@ -47,9 +47,7 @@ def main():
     number_files_imported = NumberFilesImported()
 
     merge_option = MergeOption(text='Mesclar arquivos na exportação?')
-    index_option = IndexOption(
-        text='Incluir coluna de índice? (importe novamente para atualizar)'
-    )
+    index_option = IndexOption(text='Incluir coluna de índice?')
     recursive_option = RecursiveOption(
         text='Analisar subdiretórios ao importar?',
     )

@@ -31,8 +31,8 @@ class PrefixOption(QWidget):
 
         self._combobox = QComboBox(self)
         self._combobox.addItems(self.VALUES)
-        self._combobox.setCurrentIndex(self.app.config.prefix_mode)
         self._combobox.currentTextChanged.connect(self._on_select)
+        self._combobox.setCurrentIndex(self.app.config.column_prefix_style)
 
         self._layout.addWidget(self._label)
         self._layout.addWidget(self._combobox)
@@ -43,8 +43,8 @@ class PrefixOption(QWidget):
 
         match value:
             case Values.NONE:
-                config.prefix_mode = ColumnPrefixStyle.NONE
+                config.column_prefix_style = ColumnPrefixStyle.NONE
             case Values.PARENT:
-                config.prefix_mode = ColumnPrefixStyle.PARENT
+                config.column_prefix_style = ColumnPrefixStyle.PARENT
             case Values.HIERARCHICAL:
-                config.prefix_mode = ColumnPrefixStyle.HIERARCHICAL
+                config.column_prefix_style = ColumnPrefixStyle.HIERARCHICAL

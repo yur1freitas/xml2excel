@@ -86,7 +86,7 @@ class ImportFilesButton(QPushButton):
             self._worker = ImportFilesWorker(
                 path=dirpath,
                 recursive=config.recursive,
-                prefix_mode=config.prefix_mode,
+                prefix_mode=config.column_prefix_style,
             )
 
             self._worker.moveToThread(self._thread)

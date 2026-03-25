@@ -71,7 +71,7 @@ class ExportFilesButton(QPushButton):
                     ExportFilesInput(
                         output=Path(filepath).with_suffix(FileExtensions.EXCEL),
                         data=store.data,
-                        index=config.index_column,
+                        index_column=config.index_column,
                         merge=config.merge,
                         ignore_columns=config.ignore_columns,
                         column_prefix_style=config.column_prefix_style,
@@ -100,7 +100,7 @@ class ExportFilesButton(QPushButton):
                     ExportFilesInput(
                         output=resolved_filepaths,
                         data=store.data,
-                        index=config.index_column,
+                        index_column=config.index_column,
                         merge=config.merge,
                         ignore_columns=config.ignore_columns,
                         column_prefix_style=config.column_prefix_style,

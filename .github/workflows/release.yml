@@ -25,8 +25,13 @@ jobs:
             - name: Install dependencies
               run: uv sync
 
+            - name: Install just
+              uses: extractions/setup-just@v3
+              with:
+                  just-version: "1.48.0"
+
             - name: Build executable
-              run: uv run pyinstaller --onefile -n xml2excel-${{matrix.os}} --icon assets/xml2excel.ico -w src/xml2excel/main.py
+              run: just build
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4

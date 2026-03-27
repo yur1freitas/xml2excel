@@ -31,7 +31,7 @@ jobs:
                   just-version: "1.48.0"
 
             - name: Build executable
-              run: just build
+              run: just build xml2excel-${{ matrix.os }}
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4

@@ -73,6 +73,8 @@ jobs:
             - name: Generate a changelog
               id: git-cliff
               uses: orhun/git-cliff-action@v4
+              with:
+                  args: --latest
               env:
                   OUTPUT: CHANGELOG.md
                   GITHUB_REPO: ${{ github.repository }}

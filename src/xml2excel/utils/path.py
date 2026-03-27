@@ -1,3 +1,4 @@
+import re
 import sys
 from pathlib import Path
 from typing import Iterator
@@ -10,11 +11,20 @@ def isxml(path: AnyPath) -> bool:
     return Path(path).suffix == FileExtensions.XML
 
 
+DEFAULT_PATH_DELIMITER = '/'
+
+
+def normalize_path(path: AnyPath) -> Path:
+    pattern = r'[\\/]+'
+
+    return Path(re.sub(pattern, DEFAULT_PATH_DELIMITER, str(path)))
+
+
 def resource_path(path: AnyPath) -> Path:
     if hasattr(sys, '_MEIPASS'):
-        return Path(sys._MEIPASS) / path
+        return normalize_path(Path(sys._MEIPASS) / path)
 
-    return Path().resolve() / path
+    return normalize_path(Path().resolve() / path)
 
 
 def resolve_filepath(

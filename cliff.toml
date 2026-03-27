@@ -30,7 +30,7 @@ split_commits = false
 # protect breaking changes from being skipped due to matching a skipping commit_parser
 protect_breaking_commits = false
 # filter out the commits that are not matched by commit parsers
-filter_commits = false
+filter_commits = true
 # sort the tags topologically
 topo_order = false
 # sort the commits inside sections by oldest/newest order

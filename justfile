@@ -7,8 +7,9 @@ fmt:
 check:
     uv run ty check
 
-build:
-    uv run pyinstaller --onefile -n xml2excel --icon assets/xml2excel.ico --add-data "styles/global.qss:styles/" --add-data "icons/*:icons/" -w src/xml2excel/main.py
+
+build name="xml2excel":
+    uv run pyinstaller --onefile -n {{name}} --icon assets/xml2excel.ico --add-data "styles/global.qss:styles/" --add-data "icons/*:icons/" -w src/xml2excel/main.py
 
 husky:
     bun husky

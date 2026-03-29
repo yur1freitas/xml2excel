@@ -14,13 +14,13 @@ def isxml(path: AnyPath) -> bool:
 DEFAULT_PATH_DELIMITER = '/'
 
 
-def normalize_path(path: AnyPath) -> Path:
+def normalize_path(path: AnyPath) -> str:
     pattern = r'[\\/]+'
 
-    return Path(re.sub(pattern, DEFAULT_PATH_DELIMITER, str(path)))
+    return re.sub(pattern, DEFAULT_PATH_DELIMITER, str(path))
 
 
-def resource_path(path: AnyPath) -> Path:
+def resource_path(path: AnyPath) -> str:
     if hasattr(sys, '_MEIPASS'):
         return normalize_path(Path(sys._MEIPASS) / path)
 

@@ -1,8 +1,8 @@
-## [0.3.1] - 2026-03-27
+## [0.3.2] - 2026-03-29
 
 ### 🐛 Bug Fixes
 
-- Normalize os caminhos para usar `/` como separador em `resource_path`
+- Retorne `str` e não `Path` em `resource_path` e `normalize_path`
 
 ### ⚙️ Miscellaneous Tasks
 
